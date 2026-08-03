@@ -227,25 +227,28 @@ export default function May2026CookingCalendar() {
     setIsDarkMode((current) => !current);
   }
 
-  return (
-    <main
-      className={`min-h-screen p-3 transition-colors duration-300 sm:p-4 md:p-8 ${
-        isDarkMode
-          ? "bg-slate-950 text-slate-100"
-          : "bg-slate-100 text-slate-950"
-      }`}
-    >
-      <section className="mx-auto max-w-7xl">
-        <header
-          className={`mb-5 rounded-3xl p-4 shadow-sm transition-colors duration-300 sm:mb-6 sm:p-6 ${
-            isDarkMode ? "bg-slate-900" : "bg-white"
-          }`}
-        >
-          <div className="flex items-center justify-between gap-3">
+ return (
+  <main
+    className={`min-h-screen p-2 transition-colors duration-300 sm:p-4 md:p-8 ${
+      isDarkMode
+        ? "bg-slate-950 text-slate-100"
+        : "bg-slate-100 text-slate-950"
+    }`}
+  >
+    <section className="mx-auto max-w-7xl">
+      {/* HEADER SECTION */}
+      <header
+        className={`mb-3 rounded-2xl p-3 shadow-sm transition-colors duration-300 sm:mb-6 sm:rounded-3xl sm:p-6 ${
+          isDarkMode ? "bg-slate-900" : "bg-white"
+        }`}
+      >
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          {/* Top Control Bar on Mobile (Month Nav + Title) */}
+          <div className="flex items-center justify-between gap-2 sm:contents">
             <button
               type="button"
               onClick={previousMonth}
-              className={`flex h-11 w-11 items-center justify-center rounded-full border text-3xl leading-none transition active:scale-95 sm:h-12 sm:w-12 ${
+              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-xl leading-none transition active:scale-95 sm:h-12 sm:w-12 sm:text-3xl ${
                 isDarkMode
                   ? "border-slate-700 bg-slate-800 text-slate-100 hover:bg-slate-700"
                   : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100"
@@ -255,60 +258,20 @@ export default function May2026CookingCalendar() {
               ‹
             </button>
 
-            <div className="text-center">
-              <p
-                className={`mb-1 text-xs font-bold uppercase tracking-[0.25em] sm:text-sm ${
-                  isDarkMode ? "text-blue-300" : "text-blue-700"
-                }`}
-              >
-                Shine House Cooking Turn Schedule
-              </p>
-
+            <div className="text-center sm:hidden">
               <h1
-                className={`text-3xl font-semibold tracking-wide sm:text-5xl md:text-6xl ${
+                className={`text-xl font-bold tracking-wide ${
                   isDarkMode ? "text-white" : "text-slate-950"
                 }`}
               >
                 {MONTH_NAMES[monthIndex]} {YEAR}
               </h1>
-
-              <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-                <button
-                  type="button"
-                  onClick={goToToday}
-                  className={`rounded-full px-4 py-1.5 text-xs font-bold transition active:scale-95 sm:text-sm ${
-                    isDarkMode
-                      ? "bg-white text-slate-950 hover:bg-slate-200"
-                      : "bg-slate-950 text-white hover:bg-slate-800"
-                  }`}
-                >
-                  Go to Today
-                </button>
-
-                <button
-                  type="button"
-                  onClick={toggleDarkMode}
-                  className={`rounded-full px-4 py-1.5 text-xs font-bold transition active:scale-95 sm:text-sm ${
-                    isDarkMode
-                      ? "bg-yellow-300 text-slate-950 hover:bg-yellow-200"
-                      : "bg-slate-800 text-white hover:bg-slate-700"
-                  }`}
-                >
-                  {isDarkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
-                </button>
-              </div>
-
-              {todayCook && isViewingCurrentMonth && (
-                <p className="mx-auto mt-3 inline-flex rounded-full bg-red-500 px-4 py-1.5 text-xs font-bold text-white ring-1 ring-red-300 sm:text-sm">
-                  Today: {formatTodayLabel(now)} — {todayCook.name}
-                </p>
-              )}
             </div>
 
             <button
               type="button"
               onClick={nextMonth}
-              className={`flex h-11 w-11 items-center justify-center rounded-full border text-3xl leading-none transition active:scale-95 sm:h-12 sm:w-12 ${
+              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-xl leading-none transition active:scale-95 sm:h-12 sm:w-12 sm:text-3xl ${
                 isDarkMode
                   ? "border-slate-700 bg-slate-800 text-slate-100 hover:bg-slate-700"
                   : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100"
@@ -318,183 +281,239 @@ export default function May2026CookingCalendar() {
               ›
             </button>
           </div>
-        </header>
 
-        <div
-          className={`overflow-x-auto rounded-3xl border shadow-sm transition-colors duration-300 ${
-            isDarkMode
-              ? "border-slate-700 bg-slate-900"
-              : "border-slate-300 bg-white"
-          }`}
-        >
-          <div className="min-w-[720px]">
-            <div
-              className={`grid grid-cols-7 border-b transition-colors duration-300 ${
-                isDarkMode
-                  ? "border-slate-700 bg-slate-800"
-                  : "border-slate-300 bg-slate-50"
+          {/* Center Details */}
+          <div className="text-center">
+            <p
+              className={`mb-1 text-[9px] font-bold uppercase tracking-wider sm:text-sm sm:tracking-[0.25em] ${
+                isDarkMode ? "text-blue-300" : "text-blue-700"
               }`}
             >
-              {DAY_HEADERS.map((day, index) => {
-                const isTodayHeader =
-                  isViewingCurrentMonth && index === todayDayIndex;
+              Shine House Cooking Turn Schedule
+            </p>
 
-                return (
-                  <div
-                    key={day}
-                    className={`border-r py-3 text-center text-sm font-black tracking-wide last:border-r-0 sm:text-lg ${
-                      isDarkMode ? "border-slate-700" : "border-slate-300"
-                    } ${
-                      isTodayHeader
-                        ? "bg-yellow-300 text-slate-950"
-                        : isDarkMode
-                        ? "text-slate-200"
-                        : "text-slate-700"
-                    }`}
-                  >
-                    {day}
-                  </div>
-                );
-              })}
+            <h1
+              className={`hidden text-3xl font-semibold tracking-wide sm:block sm:text-5xl md:text-6xl ${
+                isDarkMode ? "text-white" : "text-slate-950"
+              }`}
+            >
+              {MONTH_NAMES[monthIndex]} {YEAR}
+            </h1>
+
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5 sm:mt-3 sm:gap-2">
+              <button
+                type="button"
+                onClick={goToToday}
+                className={`rounded-full px-3 py-1 text-[11px] font-bold transition active:scale-95 sm:px-4 sm:py-1.5 sm:text-sm ${
+                  isDarkMode
+                    ? "bg-white text-slate-950 hover:bg-slate-200"
+                    : "bg-slate-950 text-white hover:bg-slate-800"
+                }`}
+              >
+                Go to Today
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleDarkMode}
+                className={`rounded-full px-3 py-1 text-[11px] font-bold transition active:scale-95 sm:px-4 sm:py-1.5 sm:text-sm ${
+                  isDarkMode
+                    ? "bg-yellow-300 text-slate-950 hover:bg-yellow-200"
+                    : "bg-slate-800 text-white hover:bg-slate-700"
+                }`}
+              >
+                {isDarkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+              </button>
             </div>
 
-            <div className="grid grid-cols-7">
-              {calendarCells.map((cell, index) => {
-                const isToday =
-                  todayYear === YEAR &&
-                  isViewingCurrentMonth &&
-                  cell.key === todayKey;
-
-                const isTodayColumn =
-                  isViewingCurrentMonth && cell.dayIndex === todayDayIndex;
-
-                const isLastColumn = (index + 1) % 7 === 0;
-                const isLastRow = index >= 35;
-
-                return (
-                  <div
-                    key={cell.key}
-                    className={`relative min-h-24 border-b p-2 transition-colors duration-300 sm:min-h-32 sm:p-3 ${
-                      isDarkMode ? "border-slate-700" : "border-slate-300"
-                    } ${isLastColumn ? "" : "border-r"} ${
-                      isLastRow ? "border-b-0" : ""
-                    } ${
-                      !cell.isCurrentMonth
-                        ? isDarkMode
-                          ? "bg-slate-950 text-slate-600"
-                          : "bg-slate-50 text-slate-300"
-                        : isDarkMode
-                        ? "bg-slate-900 text-slate-100"
-                        : "bg-white text-slate-950"
-                    } ${
-                      isTodayColumn
-                        ? isDarkMode
-                          ? "bg-yellow-950"
-                          : "bg-yellow-50"
-                        : ""
-                    } ${
-                      isToday
-                        ? "bg-yellow-300 text-slate-950 ring-4 ring-inset ring-yellow-500"
-                        : ""
-                    }`}
-                  >
-                    <div className="flex h-full flex-col">
-                      <div className="flex items-start justify-between">
-                        <span
-                          className={`text-sm font-bold sm:text-base ${
-                            cell.isWeekend && !isToday
-                              ? isDarkMode
-                                ? "text-slate-500"
-                                : "text-slate-400"
-                              : ""
-                          }`}
-                        >
-                          {cell.dayNumber}
-                        </span>
-
-                        {isToday && (
-                          <span className="rounded-full bg-slate-950 px-2 py-0.5 text-[10px] font-bold uppercase text-white">
-                            Today
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="flex flex-1 items-center justify-center text-center">
-                        {!cell.isWeekend &&
-                          cell.cook &&
-                          cell.isCurrentMonth && (
-                            <div>
-                              <p
-                                className={`text-lg font-black leading-tight sm:text-2xl ${
-                                  isToday
-                                    ? "text-slate-950"
-                                    : isDarkMode
-                                    ? "text-white"
-                                    : "text-slate-950"
-                                }`}
-                              >
-                                {cell.cook.name}
-                              </p>
-                            </div>
-                          )}
-
-                        {cell.isWeekend && cell.isCurrentMonth && (
-                          <p
-                            className={`text-xs font-semibold uppercase tracking-wide ${
-                              isDarkMode ? "text-slate-600" : "text-slate-300"
-                            }`}
-                          >
-                            Weekend
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            {todayCook && isViewingCurrentMonth && (
+              <p className="mx-auto mt-2 inline-flex rounded-full bg-red-500 px-3 py-1 text-[11px] font-bold text-white ring-1 ring-red-300 sm:mt-3 sm:px-4 sm:py-1.5 sm:text-sm">
+                Today: {formatTodayLabel(now)} — {todayCook.name}
+              </p>
+            )}
           </div>
         </div>
+      </header>
 
-        <footer
-          className={`mt-5 rounded-3xl border p-4 text-sm shadow-sm transition-colors duration-300 sm:mt-6 sm:p-5 ${
-            isDarkMode
-              ? "border-slate-700 bg-slate-900 text-slate-300"
-              : "border-slate-200 bg-white text-slate-700"
-          }`}
-        >
-          <p className={`font-bold ${isDarkMode ? "text-white" : "text-slate-950"}`}>
-            Start rule:
-          </p>
-
-          <div className="mt-2 rounded-xl bg-red-500 p-4 text-base font-semibold leading-7 text-white sm:text-xl">
-            <p>
-              To make things organized, each member will take turns being
-              responsible for cooking dinner.
-            </p>
-            <p className="mt-2">
-              Please follow the assigned schedule and make sure dinner is
-              prepared on your turn. Thank you everyone for cooperating!
-            </p>
-          </div>
-
-          <p
-            className={`mt-4 font-bold ${
-              isDarkMode ? "text-white" : "text-slate-950"
+      {/* CALENDAR GRID CONTAINER */}
+      <div
+        className={`w-full overflow-hidden rounded-2xl border shadow-sm transition-colors duration-300 sm:rounded-3xl ${
+          isDarkMode
+            ? "border-slate-700 bg-slate-900"
+            : "border-slate-300 bg-white"
+        }`}
+      >
+        <div className="w-full">
+          {/* DAY HEADERS */}
+          <div
+            className={`grid grid-cols-7 border-b transition-colors duration-300 ${
+              isDarkMode
+                ? "border-slate-700 bg-slate-800"
+                : "border-slate-300 bg-slate-50"
             }`}
           >
-            Rotation:
-          </p>
+            {DAY_HEADERS.map((day, index) => {
+              const isTodayHeader =
+                isViewingCurrentMonth && index === todayDayIndex;
 
-          <p className="mt-1 break-words leading-7">
-            {membersJson.map((member) => formatName(member)).join(" → ")}
-          </p>
+              return (
+                <div
+                  key={day}
+                  className={`border-r py-1.5 text-center text-[11px] font-black tracking-tighter sm:py-3 sm:text-lg sm:tracking-wide last:border-r-0 ${
+                    isDarkMode ? "border-slate-700" : "border-slate-300"
+                  } ${
+                    isTodayHeader
+                      ? "bg-yellow-300 text-slate-950"
+                      : isDarkMode
+                      ? "text-slate-200"
+                      : "text-slate-700"
+                  }`}
+                >
+                  {/* Shows short 3-letter day on mobile */}
+                  <span className="sm:hidden">{day.slice(0, 3)}</span>
+                  <span className="hidden sm:inline">{day}</span>
+                </div>
+              );
+            })}
+          </div>
 
-          <p className={`mt-4 ${isDarkMode ? "text-slate-500" : "text-slate-500"}`}>
-            Weekends are not assigned cooking turns.
+          {/* CALENDAR CELLS */}
+          <div className="grid grid-cols-7">
+            {calendarCells.map((cell, index) => {
+              const isToday =
+                todayYear === YEAR &&
+                isViewingCurrentMonth &&
+                cell.key === todayKey;
+
+              const isTodayColumn =
+                isViewingCurrentMonth && cell.dayIndex === todayDayIndex;
+
+              const isLastColumn = (index + 1) % 7 === 0;
+              const isLastRow = index >= 35;
+
+              return (
+                <div
+                  key={cell.key}
+                  className={`relative min-h-[68px] border-b p-1 transition-colors duration-300 sm:min-h-32 sm:p-3 ${
+                    isDarkMode ? "border-slate-700" : "border-slate-300"
+                  } ${isLastColumn ? "" : "border-r"} ${
+                    isLastRow ? "border-b-0" : ""
+                  } ${
+                    !cell.isCurrentMonth
+                      ? isDarkMode
+                        ? "bg-slate-950 text-slate-600"
+                        : "bg-slate-50 text-slate-300"
+                      : isDarkMode
+                      ? "bg-slate-900 text-slate-100"
+                      : "bg-white text-slate-950"
+                  } ${
+                    isTodayColumn
+                      ? isDarkMode
+                        ? "bg-yellow-950/50"
+                        : "bg-yellow-50"
+                      : ""
+                  } ${
+                    isToday
+                      ? "bg-yellow-300 text-slate-950 ring-2 ring-inset ring-yellow-500 sm:ring-4"
+                      : ""
+                  }`}
+                >
+                  <div className="flex h-full flex-col justify-between">
+                    <div className="flex items-start justify-between">
+                      <span
+                        className={`text-[11px] font-bold sm:text-base ${
+                          cell.isWeekend && !isToday
+                            ? isDarkMode
+                              ? "text-slate-500"
+                              : "text-slate-400"
+                            : ""
+                        }`}
+                      >
+                        {cell.dayNumber}
+                      </span>
+
+                      {isToday && (
+                        <span className="rounded bg-slate-950 px-1 py-0.2 text-[8px] font-black uppercase text-white sm:rounded-full sm:px-2 sm:py-0.5 sm:text-[10px]">
+                          Today
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="my-auto flex items-center justify-center text-center">
+                      {!cell.isWeekend &&
+                        cell.cook &&
+                        cell.isCurrentMonth && (
+                          <p
+                            className={`break-all text-[10px] font-black leading-tight sm:break-normal sm:text-2xl ${
+                              isToday
+                                ? "text-slate-950"
+                                : isDarkMode
+                                ? "text-white"
+                                : "text-slate-950"
+                            }`}
+                          >
+                            {cell.cook.name}
+                          </p>
+                        )}
+
+                      {cell.isWeekend && cell.isCurrentMonth && (
+                        <p
+                          className={`text-[8px] font-medium uppercase sm:text-xs sm:font-semibold ${
+                            isDarkMode ? "text-slate-600" : "text-slate-300"
+                          }`}
+                        >
+                          Off
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* FOOTER SECTION */}
+      <footer
+        className={`mt-4 rounded-2xl border p-3 text-xs shadow-sm transition-colors duration-300 sm:mt-6 sm:rounded-3xl sm:p-5 sm:text-sm ${
+          isDarkMode
+            ? "border-slate-700 bg-slate-900 text-slate-300"
+            : "border-slate-200 bg-white text-slate-700"
+        }`}
+      >
+        <p className={`font-bold ${isDarkMode ? "text-white" : "text-slate-950"}`}>
+          Start rule:
+        </p>
+
+        <div className="mt-2 rounded-xl bg-red-500 p-3 text-xs font-semibold leading-snug text-white sm:p-4 sm:text-xl sm:leading-7">
+          <p>
+            To make things organized, each member will take turns being
+            responsible for cooking dinner.
           </p>
-        </footer>
-      </section>
-    </main>
-  );
+          <p className="mt-2">
+            Please follow the assigned schedule and make sure dinner is
+            prepared on your turn. Thank you everyone for cooperating!
+          </p>
+        </div>
+
+        <p
+          className={`mt-3 font-bold sm:mt-4 ${
+            isDarkMode ? "text-white" : "text-slate-950"
+          }`}
+        >
+          Rotation:
+        </p>
+
+        <p className="mt-1 break-words text-xs leading-relaxed sm:text-sm sm:leading-7">
+          {membersJson.map((member) => formatName(member)).join(" → ")}
+        </p>
+
+        <p className={`mt-2 text-[10px] sm:mt-4 sm:text-xs ${isDarkMode ? "text-slate-500" : "text-slate-500"}`}>
+          Weekends are not assigned cooking turns.
+        </p>
+      </footer>
+    </section>
+  </main>
+);
 }
