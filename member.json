@@ -1,8 +1,7 @@
 [
   { "id": 1, "name": "Lin" },
   { "id": 2, "name": "Kan" },
-  { "id": 3, "name": "Santik" },
-  { "id": 4, "name": "Prakvan" },
-  { "id": 5, "name": "Bunna" },
-  { "id": 6, "name": "Nhem" }
+  { "id": 3, "name": "Prakvan" },
+  { "id": 4, "name": "Bunna" },
+  { "id": 5, "name": "Nhem" }
 ]
