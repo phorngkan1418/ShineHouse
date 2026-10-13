@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import membersJson from "../member.json";
+import "./CookingCalendar.css";
 
 const YEAR = 2026;
 const MONTH_NAMES = [
@@ -128,15 +129,19 @@ function Icon({ name, className = "" }) {
 
 export default function ShineHouseCookingCalendar() {
   const [now, setNow] = useState(() => new Date());
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    try {
+      return window.localStorage.getItem(THEME_KEY) === "dark";
+    } catch {
+      return false;
+    }
+  });
   const [monthIndex, setMonthIndex] = useState(() => {
     const current = new Date();
     return current.getFullYear() === YEAR ? current.getMonth() : 9;
   });
 
   useEffect(() => {
-    const savedTheme = window.localStorage.getItem(THEME_KEY);
-    setIsDarkMode(savedTheme === "dark");
     const intervalId = window.setInterval(() => setNow(new Date()), SIX_HOURS);
     return () => window.clearInterval(intervalId);
   }, []);
@@ -292,7 +297,7 @@ export default function ShineHouseCookingCalendar() {
             </div>
           </div>
 
-          <div className="grid grid-cols-7">
+          <div className="calendar-weekdays grid grid-cols-7">
             {DAY_HEADERS.map((day, index) => {
               const isTodayHeader = isViewingCurrentMonth && index === todayDayIndex;
               return (
@@ -303,7 +308,7 @@ export default function ShineHouseCookingCalendar() {
             })}
           </div>
 
-          <div className="grid grid-cols-7">
+          <div className="calendar-days-grid grid grid-cols-7">
             {calendarCells.map((cell, index) => {
               const isToday = todayYear === YEAR && isViewingCurrentMonth && cell.key === todayKey;
               const isTodayColumn = isViewingCurrentMonth && cell.dayIndex === todayDayIndex;
@@ -332,6 +337,41 @@ export default function ShineHouseCookingCalendar() {
                     </div>
                   )}
                 </div>
+              );
+            })}
+          </div>
+
+          {/* Mobile agenda: easier to read than a 7-column calendar on a phone */}
+          <div className={`mobile-agenda ${isDarkMode ? "is-dark" : "is-light"}`} aria-label={`${monthTitle} cooking schedule`}>
+            {calendarCells.filter((cell) => cell.isCurrentMonth).map((cell) => {
+              const isToday = todayYear === YEAR && isViewingCurrentMonth && cell.key === todayKey;
+              const isAssigned = !cell.isWeekend && Boolean(cell.cook);
+              const weekdayName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][cell.dayIndex];
+              return (
+                <article
+                  key={cell.key}
+                  className={`mobile-agenda-item ${cell.isWeekend ? "is-weekend" : "is-cooking-day"} ${isToday ? "is-today" : ""}`}
+                >
+                  <div className="mobile-agenda-date" aria-label={`${weekdayName}, ${cell.dayNumber}`}>
+                    <span className="mobile-agenda-weekday">{weekdayName.slice(0, 3)}</span>
+                    <span className="mobile-agenda-day-number">{cell.dayNumber}</span>
+                  </div>
+                  <div className="mobile-agenda-content">
+                    <div className="mobile-agenda-label-row">
+                      <span className="mobile-agenda-label">{cell.isWeekend ? "Rest day" : "Dinner duty"}</span>
+                      {isToday && <span className="mobile-today-pill">Today</span>}
+                    </div>
+                    <p className="mobile-agenda-name">
+                      {cell.isWeekend ? "No cooking assigned" : isAssigned ? cell.cook.name : "Not assigned"}
+                    </p>
+                    <p className="mobile-agenda-subtitle">
+                      {cell.isWeekend ? "Enjoy your weekend" : "Please prepare dinner for the house"}
+                    </p>
+                  </div>
+                  <span className={`mobile-agenda-status ${cell.isWeekend ? "status-off" : "status-on"}`} aria-hidden="true">
+                    {cell.isWeekend ? "–" : "•"}
+                  </span>
+                </article>
               );
             })}
           </div>

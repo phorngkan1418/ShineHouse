@@ -1,0 +1,301 @@
+/* Shine House Cooking Calendar — responsive refinements */
+
+:root {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+button:focus-visible {
+  outline: 3px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+/* Avoid tiny-screen horizontal scrolling caused by long names or controls. */
+html,
+body,
+#root {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.mobile-agenda {
+  display: none;
+}
+
+/* Tablet and phone: swap the compressed 7-column calendar for a readable agenda. */
+@media (max-width: 760px) {
+  .calendar-weekdays,
+  .calendar-days-grid {
+    display: none !important;
+  }
+
+  .mobile-agenda {
+    display: grid;
+    gap: 0.65rem;
+    padding: 0.8rem;
+  }
+
+  .mobile-agenda-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-width: 0;
+    padding: 0.8rem;
+    border: 1px solid;
+    border-radius: 1rem;
+    background: #fff;
+    border-color: #e5eaf2;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 3%);
+    transition: border-color 160ms ease, background-color 160ms ease,
+      box-shadow 160ms ease, transform 160ms ease;
+  }
+
+  .mobile-agenda-item:active {
+    transform: scale(0.995);
+  }
+
+  .mobile-agenda-date {
+    display: flex;
+    flex: 0 0 3.45rem;
+    min-height: 3.65rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.12rem;
+    border-radius: 0.85rem;
+    background: #eff6ff;
+    color: #1d4ed8;
+  }
+
+  .mobile-agenda-weekday {
+    font-size: 0.68rem;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .mobile-agenda-day-number {
+    font-size: 1.35rem;
+    line-height: 1.15;
+    font-weight: 850;
+    letter-spacing: -0.04em;
+  }
+
+  .mobile-agenda-content {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .mobile-agenda-label-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .mobile-agenda-label {
+    color: #64748b;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .mobile-today-pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.18rem 0.48rem;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.62rem;
+    line-height: 1.2;
+    font-weight: 850;
+  }
+
+  .mobile-agenda-name {
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: #0f172a;
+    font-size: 0.98rem;
+    line-height: 1.35;
+    font-weight: 800;
+  }
+
+  .mobile-agenda-subtitle {
+    margin: 0.2rem 0 0;
+    color: #64748b;
+    font-size: 0.73rem;
+    line-height: 1.4;
+  }
+
+  .mobile-agenda-status {
+    display: inline-flex;
+    flex: 0 0 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-size: 1.25rem;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .mobile-agenda-status.status-on {
+    background: #dbeafe;
+    color: #2563eb;
+  }
+
+  .mobile-agenda-status.status-off {
+    background: #f1f5f9;
+    color: #94a3b8;
+  }
+
+  .mobile-agenda-item.is-weekend .mobile-agenda-date {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+
+  .mobile-agenda-item.is-weekend .mobile-agenda-name {
+    color: #64748b;
+    font-size: 0.9rem;
+  }
+
+  .mobile-agenda-item.is-today {
+    border-color: #fbbf24;
+    background: #fffbeb;
+    box-shadow: 0 0 0 2px rgb(251 191 36 / 15%);
+  }
+
+  .mobile-agenda-item.is-today .mobile-agenda-date {
+    background: #fbbf24;
+    color: #422006;
+  }
+
+  .mobile-agenda-item.is-today .mobile-agenda-name {
+    color: #451a03;
+  }
+
+  /* Dark theme */
+  .mobile-agenda.is-dark .mobile-agenda-item {
+    background: #111a2c;
+    border-color: #29364b;
+    box-shadow: none;
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-date {
+    background: rgb(59 130 246 / 16%);
+    color: #93c5fd;
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-label {
+    color: #94a3b8;
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-name {
+    color: #f1f5f9;
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-subtitle {
+    color: #94a3b8;
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-status.status-on {
+    background: rgb(59 130 246 / 18%);
+    color: #93c5fd;
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-status.status-off,
+  .mobile-agenda.is-dark .mobile-agenda-item.is-weekend .mobile-agenda-date {
+    background: #1e293b;
+    color: #94a3b8;
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-item.is-weekend .mobile-agenda-name {
+    color: #cbd5e1;
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-item.is-today {
+    background: rgb(245 158 11 / 10%);
+    border-color: #b7791f;
+    box-shadow: 0 0 0 2px rgb(245 158 11 / 10%);
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-item.is-today .mobile-agenda-date {
+    background: #fbbf24;
+    color: #422006;
+  }
+
+  .mobile-agenda.is-dark .mobile-agenda-item.is-today .mobile-agenda-name {
+    color: #fef3c7;
+  }
+
+  .mobile-agenda.is-dark .mobile-today-pill {
+    background: rgb(251 191 36 / 16%);
+    color: #fcd34d;
+  }
+}
+
+@media (max-width: 390px) {
+  .mobile-agenda {
+    gap: 0.5rem;
+    padding: 0.6rem;
+  }
+
+  .mobile-agenda-item {
+    gap: 0.6rem;
+    padding: 0.65rem;
+    border-radius: 0.85rem;
+  }
+
+  .mobile-agenda-date {
+    flex-basis: 3rem;
+    min-height: 3.3rem;
+  }
+
+  .mobile-agenda-day-number {
+    font-size: 1.2rem;
+  }
+
+  .mobile-agenda-name {
+    font-size: 0.9rem;
+  }
+
+  .mobile-agenda-subtitle {
+    font-size: 0.68rem;
+  }
+
+  .mobile-agenda-status {
+    flex-basis: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
