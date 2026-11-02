@@ -16,7 +16,7 @@ const MONTH_NAMES = [
   "DECEMBER",
 ];
 const DAY_HEADERS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-const ANCHOR_DATE = "2026-10-13";
+const ANCHOR_DATE = "2026-11-02";
 const ANCHOR_MEMBER_ID = 1;
 const SIX_HOURS = 6 * 60 * 60 * 1000;
 function parseLocalDate(dateString) {
